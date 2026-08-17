@@ -1,0 +1,6 @@
+SkillTrack/
+│
+├── client/
+├── server/
+├── .gitignore
+└── README.md
