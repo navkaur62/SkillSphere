@@ -4,6 +4,7 @@ const {
     createSkill,
     getAllSkills,
     addSkillToProfile,
+    updateSkillProgress,
     removeSkillFromProfile
 } = require("../controllers/skillController");
 
@@ -11,16 +12,14 @@ const protect = require("../middleware/authmiddleware");
 
 const router = express.Router();
 
-// Create a skill
 router.post("/", protect, createSkill);
 
-// Get all skills
 router.get("/", protect, getAllSkills);
 
-// Add skill to logged-in user's profile
 router.post("/add", protect, addSkillToProfile);
 
-// Remove skill from logged-in user's profile
+router.put("/progress/:skillId", protect, updateSkillProgress);
+
 router.delete("/remove/:skillId", protect, removeSkillFromProfile);
 
 module.exports = router;

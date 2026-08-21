@@ -41,12 +41,45 @@ const userSchema = new mongoose.Schema(
             default: ""
         },
 
-        skills: [
-            {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: "Skill"
-            }
-        ],
+       skills: [
+    {
+        skill: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Skill",
+            required: true
+        },
+
+        level: {
+            type: String,
+            enum: ["Beginner", "Intermediate", "Advanced", "Expert"],
+            default: "Beginner"
+        },
+
+        progress: {
+            type: Number,
+            min: 0,
+            max: 100,
+            default: 0
+        },
+
+        status: {
+            type: String,
+            enum: ["Not Started", "Learning", "Completed"],
+            default: "Not Started"
+        },
+
+        experience: {
+            type: Number,
+            min: 0,
+            default: 0
+        },
+
+        addedAt: {
+            type: Date,
+            default: Date.now
+        }
+    }
+],
 
         learningPaths: [
             {

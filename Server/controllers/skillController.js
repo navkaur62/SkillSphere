@@ -68,7 +68,13 @@ const getAllSkills = async (req, res) => {
 // ADD SKILL TO USER PROFILE
 const addSkillToProfile = async (req, res) => {
     try {
-        const { skillId } = req.body;
+        const {
+            skillId,
+            level,
+            progress,
+            status,
+            experience
+        } = req.body;
 
         if (!skillId) {
             return res.status(400).json({
@@ -92,19 +98,30 @@ const addSkillToProfile = async (req, res) => {
             });
         }
 
-        if (user.skills.includes(skillId)) {
+        // Check if skill is already added
+        const alreadyAdded = user.skills.some(
+            (item) => item.skill.toString() === skillId
+        );
+
+        if (alreadyAdded) {
             return res.status(400).json({
                 message: "Skill already added to profile"
             });
         }
 
-        user.skills.push(skillId);
+        user.skills.push({
+            skill: skillId,
+            level: level || "Beginner",
+            progress: progress ?? 0,
+            status: status || "Not Started",
+            experience: experience ?? 0
+        });
 
         await user.save();
 
         const updatedUser = await User.findById(req.user.userId)
             .select("-password")
-            .populate("skills");
+            .populate("skills.skill");
 
         res.status(200).json({
             message: "Skill added to profile successfully",
@@ -113,6 +130,74 @@ const addSkillToProfile = async (req, res) => {
 
     } catch (error) {
         console.error("Add skill error:", error);
+
+        res.status(500).json({
+            message: "Server error",
+            error: error.message
+        });
+    }
+};
+
+
+// UPDATE SKILL PROGRESS
+const updateSkillProgress = async (req, res) => {
+    try {
+        const { skillId } = req.params;
+
+        const {
+            level,
+            progress,
+            status,
+            experience
+        } = req.body;
+
+        const user = await User.findById(req.user.userId);
+
+        if (!user) {
+            return res.status(404).json({
+                message: "User not found"
+            });
+        }
+
+        const userSkill = user.skills.find(
+            (item) => item.skill.toString() === skillId
+        );
+
+        if (!userSkill) {
+            return res.status(404).json({
+                message: "Skill is not in your profile"
+            });
+        }
+
+        if (level !== undefined) {
+            userSkill.level = level;
+        }
+
+        if (progress !== undefined) {
+            userSkill.progress = progress;
+        }
+
+        if (status !== undefined) {
+            userSkill.status = status;
+        }
+
+        if (experience !== undefined) {
+            userSkill.experience = experience;
+        }
+
+        await user.save();
+
+        const updatedUser = await User.findById(req.user.userId)
+            .select("-password")
+            .populate("skills.skill");
+
+        res.status(200).json({
+            message: "Skill progress updated successfully",
+            user: updatedUser
+        });
+
+    } catch (error) {
+        console.error("Update skill progress error:", error);
 
         res.status(500).json({
             message: "Server error",
@@ -136,7 +221,7 @@ const removeSkillFromProfile = async (req, res) => {
         }
 
         const skillExists = user.skills.some(
-            (id) => id.toString() === skillId
+            (item) => item.skill.toString() === skillId
         );
 
         if (!skillExists) {
@@ -146,14 +231,14 @@ const removeSkillFromProfile = async (req, res) => {
         }
 
         user.skills = user.skills.filter(
-            (id) => id.toString() !== skillId
+            (item) => item.skill.toString() !== skillId
         );
 
         await user.save();
 
         const updatedUser = await User.findById(req.user.userId)
             .select("-password")
-            .populate("skills");
+            .populate("skills.skill");
 
         res.status(200).json({
             message: "Skill removed from profile successfully",
@@ -175,5 +260,6 @@ module.exports = {
     createSkill,
     getAllSkills,
     addSkillToProfile,
+    updateSkillProgress,
     removeSkillFromProfile
 };
