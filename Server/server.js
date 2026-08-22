@@ -6,6 +6,8 @@ const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
 const skillRoutes = require("./routes/skillRoutes");
 const dashboardRoutes = require("./routes/dashboardRoutes");
+const learningPathRoutes = require("./routes/learningPathRoutes");
+const goalRoutes = require("./routes/goalRoutes");
 dotenv.config();
 
 const app = express();
@@ -15,6 +17,8 @@ app.use("/api/skills", skillRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/learning-paths", learningPathRoutes);
+app.use("/api/goals", goalRoutes);
 
 connectDB();
 
