@@ -8,6 +8,9 @@ const skillRoutes = require("./routes/skillRoutes");
 const dashboardRoutes = require("./routes/dashboardRoutes");
 const learningPathRoutes = require("./routes/learningPathRoutes");
 const goalRoutes = require("./routes/goalRoutes");
+const certificationRoutes = require("./routes/certificationRoutes");
+const adminRoutes = require("./routes/adminRoutes");
+const errorMiddleware = require("./middleware/errorMiddleware");
 dotenv.config();
 
 const app = express();
@@ -19,6 +22,9 @@ app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/learning-paths", learningPathRoutes);
 app.use("/api/goals", goalRoutes);
+app.use("/api/certifications", certificationRoutes);
+app.use("/api/admin", adminRoutes);
+app.use(errorMiddleware);
 
 connectDB();
 

@@ -41,6 +41,11 @@ const getDashboard = async (req, res) => {
                       ) / totalSkills
                   )
                 : 0;
+                
+        const totalProgressPoints = skills.reduce(
+            (total, skill) => total + skill.progress,
+            0
+            );
 
         // Get recent skills
         const recentSkills = [...skills]
@@ -62,10 +67,26 @@ const getDashboard = async (req, res) => {
                 totalSkills,
                 completedSkills,
                 learningSkills,
-                notStartedSkills
+                notStartedSkills,
+
+                completedPercentage:
+                totalSkills > 0
+                ? Math.round((completedSkills / totalSkills) * 100)
+                : 0,
+
+                learningPercentage:
+                totalSkills > 0
+                ? Math.round((learningSkills / totalSkills) * 100)
+                : 0,
+
+             notStartedPercentage:
+             totalSkills > 0
+             ? Math.round((notStartedSkills / totalSkills) * 100)
+             : 0
             },
 
             overallProgress,
+            totalProgressPoints,
 
             recentSkills
         });
