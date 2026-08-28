@@ -13,42 +13,66 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  // Check login information when app starts
   useEffect(() => {
     const token = localStorage.getItem("token");
     const storedUser = localStorage.getItem("user");
 
     if (token && storedUser) {
       try {
-        setUser(JSON.parse(storedUser));
+        const parsedUser = JSON.parse(storedUser);
+        setUser(parsedUser);
       } catch (error) {
         console.error("Invalid stored user:", error);
-        localStorage.removeItem("user");
+
         localStorage.removeItem("token");
+        localStorage.removeItem("user");
       }
     }
 
     setLoading(false);
   }, []);
 
+  // LOGIN
   const login = async (credentials) => {
-    const data = await authService.login(credentials);
+    try {
+      const data = await authService.login(credentials);
 
-    localStorage.setItem("token", data.token);
-    localStorage.setItem("user", JSON.stringify(data.user));
+      // Save token
+      localStorage.setItem("token", data.token);
 
-    setUser(data.user);
+      // Save user
+      localStorage.setItem("user", JSON.stringify(data.user));
 
-    return data;
+      // Update React state
+      setUser(data.user);
+
+      return data;
+    } catch (error) {
+      console.error("Login error:", error);
+      throw error;
+    }
   };
 
+  // REGISTER
   const register = async (userData) => {
-    const data = await authService.register(userData);
+    try {
+      const data = await authService.register(userData);
 
-    return data;
+      return data;
+    } catch (error) {
+      console.error("Registration error:", error);
+      throw error;
+    }
   };
 
+  // LOGOUT
   const logout = () => {
     authService.logout();
+
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+
     setUser(null);
   };
 
@@ -67,6 +91,7 @@ export function AuthProvider({ children }) {
   );
 }
 
+// CUSTOM HOOK
 export function useAuth() {
   return useContext(AuthContext);
 }

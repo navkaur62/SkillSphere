@@ -1,4 +1,5 @@
 const express = require("express");
+const User = require("../models/user");
 
 const {
   registerUser,
@@ -9,18 +10,47 @@ const protect = require("../middleware/authmiddleware");
 
 const router = express.Router();
 
-// Register
+// ===============================
+// REGISTER
+// ===============================
 router.post("/register", registerUser);
 
-// Login
+
+// ===============================
+// LOGIN
+// ===============================
 router.post("/login", loginUser);
 
-// Protected test route
-router.get("/profile", protect, (req, res) => {
-  res.status(200).json({
-    message: "You can access this protected route",
-    user: req.user,
-  });
+
+// ===============================
+// GET LOGGED-IN USER PROFILE
+// ===============================
+router.get("/profile", protect, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.userId)
+      .select("-password")
+      .populate("skills.skill");
+
+    if (!user) {
+      return res.status(404).json({
+        message: "User not found",
+      });
+    }
+
+    res.status(200).json({
+      message: "Profile fetched successfully",
+      user,
+    });
+
+  } catch (error) {
+    console.error("Profile error:", error);
+
+    res.status(500).json({
+      message: "Server error",
+      error: error.message,
+    });
+  }
 });
+
 
 module.exports = router;

@@ -9,6 +9,8 @@ import Login from "../pages/Login";
 import Register from "../pages/Register";
 import Dashboard from "../pages/Dashboard";
 import ProtectedRoute from "./ProtectedRoute";
+import Skills from "../pages/Skills";
+import LearningPaths from "../pages/LearningPaths";
 
 function AppRoutes() {
   return (
@@ -35,10 +37,22 @@ function AppRoutes() {
         {/* Protected Routes */}
 
         <Route element={<ProtectedRoute />}>
+
           <Route
             path="/dashboard"
             element={<Dashboard />}
           />
+
+          <Route
+            path="/skills"
+            element={<Skills />}
+          />
+
+          <Route
+            path="/learning-paths"
+            element={<LearningPaths />}
+          />
+
         </Route>
 
       </Routes>
