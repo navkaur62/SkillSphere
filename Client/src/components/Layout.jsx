@@ -1,18 +1,26 @@
+import { Outlet } from "react-router-dom";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
 
-function Layout({ children }) {
+function Layout() {
   return (
     <div className="app-layout">
+
+      {/* Top Navbar */}
       <Navbar />
 
       <div className="app-body">
+
+        {/* Left Sidebar */}
         <Sidebar />
 
+        {/* Page Content */}
         <main className="main-content">
-          {children}
+          <Outlet />
         </main>
+
       </div>
+
     </div>
   );
 }

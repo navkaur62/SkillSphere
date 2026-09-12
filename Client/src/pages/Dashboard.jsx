@@ -1,7 +1,19 @@
 import { useEffect, useState } from "react";
+import {
+  Laptop,
+  ChartNoAxesCombined,
+  BookOpen,
+  Trophy,
+  BarChart3,
+  Lightbulb,
+  ChevronRight,
+  CheckCircle2,
+  CircleDot,
+} from "lucide-react";
+import "./Dashboard.css";
 import { useAuth } from "../context/authContext";
 import dashboardService from "../services/dashboardService";
-
+import StudentAvatar from "../components/StudentAvatar";
 function Dashboard() {
   const { user } = useAuth();
 
@@ -23,7 +35,7 @@ function Dashboard() {
 
         setError(
           err.response?.data?.message ||
-          "Failed to load dashboard data."
+            "Failed to load dashboard data."
         );
       } finally {
         setLoading(false);
@@ -56,7 +68,6 @@ function Dashboard() {
   }
 
   const dashboardUser = dashboard?.user || user;
-
   const statistics = dashboard?.statistics || {};
 
   const totalSkills = statistics.totalSkills || 0;
@@ -65,16 +76,19 @@ function Dashboard() {
   const notStartedSkills = statistics.notStartedSkills || 0;
 
   const overallProgress = dashboard?.overallProgress || 0;
-
   const recentSkills = dashboard?.recentSkills || [];
 
   return (
     <div className="dashboard-page">
 
-      {/* Welcome Section */}
+      {/* =========================
+          WELCOME BANNER
+      ========================= */}
 
       <section className="welcome-section">
-        <div>
+
+        <div className="welcome-content">
+
           <p className="welcome-label">
             WELCOME BACK 👋
           </p>
@@ -83,87 +97,113 @@ function Dashboard() {
             Hello, {dashboardUser?.name || "Learner"}!
           </h1>
 
-          <p>
+          <p className="welcome-description">
             Continue your learning journey and achieve your goals.
           </p>
+
         </div>
 
-        <div className="welcome-icon">
-          🎓
-        </div>
+       <div className="welcome-illustration">
+  <StudentAvatar />
+
+  <div className="graduation-cap">
+    🎓
+  </div>
+</div>
+
       </section>
 
 
-      {/* Statistics */}
+      {/* =========================
+          STATISTICS
+      ========================= */}
 
       <section className="stats-grid">
 
         <div className="stat-card">
-          <div className="stat-icon">
-            💻
+
+          <div className="stat-icon blue-icon">
+            <Laptop size={25} />
           </div>
 
           <div>
             <p>Total Skills</p>
             <h2>{totalSkills}</h2>
           </div>
+
         </div>
 
 
         <div className="stat-card">
-          <div className="stat-icon">
-            📈
+
+          <div className="stat-icon purple-icon">
+            <ChartNoAxesCombined size={25} />
           </div>
 
           <div>
             <p>Overall Progress</p>
             <h2>{overallProgress}%</h2>
           </div>
+
         </div>
 
 
         <div className="stat-card">
-          <div className="stat-icon">
-            📚
+
+          <div className="stat-icon green-icon">
+            <BookOpen size={25} />
           </div>
 
           <div>
             <p>Learning</p>
             <h2>{learningSkills}</h2>
           </div>
+
         </div>
 
 
         <div className="stat-card">
-          <div className="stat-icon">
-            🏆
+
+          <div className="stat-icon orange-icon">
+            <Trophy size={25} />
           </div>
 
           <div>
             <p>Completed</p>
             <h2>{completedSkills}</h2>
           </div>
+
         </div>
 
       </section>
 
 
-      {/* Progress + Skill Status */}
+      {/* =========================
+          PROGRESS + STATUS
+      ========================= */}
 
       <section className="dashboard-grid">
 
-        {/* Overall Progress */}
+        {/* Learning Progress */}
 
         <div className="dashboard-card progress-card">
 
           <div className="card-header">
 
-            <div>
-              <h2>Learning Progress</h2>
+            <div className="card-title-area">
 
-              <p>
-                Your overall learning performance
-              </p>
+              <div className="section-icon purple-section-icon">
+                <ChartNoAxesCombined size={21} />
+              </div>
+
+              <div>
+                <h2>Learning Progress</h2>
+
+                <p>
+                  Your overall learning performance
+                </p>
+              </div>
+
             </div>
 
             <span className="percentage">
@@ -180,7 +220,7 @@ function Dashboard() {
               style={{
                 width: `${overallProgress}%`,
               }}
-            ></div>
+            />
 
           </div>
 
@@ -199,17 +239,25 @@ function Dashboard() {
 
           <div className="card-header">
 
-            <div>
-              <h2>Skill Status</h2>
+            <div className="card-title-area">
 
-              <p>
-                Your current skill progress
-              </p>
+              <div className="section-icon blue-section-icon">
+                <BarChart3 size={21} />
+              </div>
+
+              <div>
+                <h2>Skill Status</h2>
+
+                <p>
+                  Your current skill progress
+                </p>
+              </div>
+
             </div>
 
-            <span className="card-icon">
+            <div className="status-header-icon">
               📊
-            </span>
+            </div>
 
           </div>
 
@@ -217,23 +265,49 @@ function Dashboard() {
           <div className="skill-list">
 
             <div className="skill-row">
-              <span>Completed</span>
+
+              <div className="status-label">
+                <span className="status-dot completed-dot"></span>
+                <span>Completed</span>
+              </div>
+
               <strong>{completedSkills}</strong>
+
             </div>
 
+
             <div className="skill-row">
-              <span>Learning</span>
+
+              <div className="status-label">
+                <span className="status-dot learning-dot"></span>
+                <span>Learning</span>
+              </div>
+
               <strong>{learningSkills}</strong>
+
             </div>
 
+
             <div className="skill-row">
-              <span>Not Started</span>
+
+              <div className="status-label">
+                <span className="status-dot not-started-dot"></span>
+                <span>Not Started</span>
+              </div>
+
               <strong>{notStartedSkills}</strong>
+
             </div>
 
-            <div className="skill-row">
-              <span>Total</span>
+
+            <div className="skill-row total-row">
+
+              <div className="status-label">
+                <span>Total</span>
+              </div>
+
               <strong>{totalSkills}</strong>
+
             </div>
 
           </div>
@@ -243,23 +317,33 @@ function Dashboard() {
       </section>
 
 
-      {/* Recent Skills */}
+      {/* =========================
+          RECENT SKILLS
+      ========================= */}
 
       <section className="dashboard-card recent-card">
 
         <div className="card-header">
 
-          <div>
-            <h2>Recent Skills</h2>
+          <div className="card-title-area">
 
-            <p>
-              Your recently added skills
-            </p>
+            <div className="section-icon purple-section-icon">
+              <Lightbulb size={21} />
+            </div>
+
+            <div>
+              <h2>Recent Skills</h2>
+
+              <p>
+                Your recently added skills
+              </p>
+            </div>
+
           </div>
 
-          <span className="card-icon">
+          <div className="recent-header-icon">
             💡
-          </span>
+          </div>
 
         </div>
 
@@ -267,13 +351,13 @@ function Dashboard() {
         {recentSkills.length === 0 ? (
 
           <div className="empty-state">
-            <p>
-              No skills added yet.
-            </p>
+
+            <p>No skills added yet.</p>
 
             <p>
               Start adding skills to track your progress.
             </p>
+
           </div>
 
         ) : (
@@ -286,10 +370,11 @@ function Dashboard() {
             >
 
               <div className="activity-icon">
-                💻
+                <Laptop size={19} />
               </div>
 
-              <div>
+
+              <div className="activity-content">
 
                 <strong>
                   {item.skill?.name || "Skill"}
@@ -303,67 +388,17 @@ function Dashboard() {
 
               </div>
 
+
+              <ChevronRight
+                className="activity-arrow"
+                size={20}
+              />
+
             </div>
 
           ))
 
         )}
-
-      </section>
-
-
-      {/* Account Information */}
-
-      <section className="dashboard-card">
-
-        <div className="card-header">
-
-          <div>
-            <h2>Account Overview</h2>
-
-            <p>
-              Your SkillSphere account information
-            </p>
-          </div>
-
-          <span className="card-icon">
-            👤
-          </span>
-
-        </div>
-
-
-        <div className="skill-list">
-
-          <div className="skill-row">
-            <span>Name</span>
-            <strong>
-              {dashboardUser?.name || "—"}
-            </strong>
-          </div>
-
-          <div className="skill-row">
-            <span>Email</span>
-            <strong>
-              {dashboardUser?.email || "—"}
-            </strong>
-          </div>
-
-          <div className="skill-row">
-            <span>Level</span>
-            <strong>
-              {dashboardUser?.level || "—"}
-            </strong>
-          </div>
-
-          <div className="skill-row">
-            <span>Total Points</span>
-            <strong>
-              {dashboardUser?.totalPoints || 0}
-            </strong>
-          </div>
-
-        </div>
 
       </section>
 

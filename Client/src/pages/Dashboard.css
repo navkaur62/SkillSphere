@@ -1,0 +1,827 @@
+/* =================================
+   DASHBOARD
+================================= */
+
+.dashboard-page {
+  width: 100%;
+  max-width: 1400px;
+
+  margin: 0 auto;
+
+  padding: 0;
+
+  font-family:
+    "Inter",
+    "Segoe UI",
+    Arial,
+    sans-serif;
+}
+
+
+/* =================================
+   WELCOME BANNER
+================================= */
+
+.welcome-section {
+  min-height: 158px;
+
+  padding: 24px 30px;
+
+  margin-bottom: 22px;
+
+  border-radius: 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  position: relative;
+
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      110deg,
+      #eef2ff 0%,
+      #e9edff 55%,
+      #e4e9ff 100%
+    );
+
+  border: 1px solid #e1e6f7;
+
+  box-shadow:
+    0 7px 22px rgba(70, 85, 150, 0.045);
+}
+
+
+/* =================================
+   WELCOME CONTENT
+================================= */
+
+.welcome-content {
+  position: relative;
+
+  z-index: 5;
+
+  padding-left: 3px;
+}
+
+.welcome-label {
+  margin: 0 0 6px;
+
+  color: #34588e;
+
+  font-size: 13px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.06em;
+}
+
+.welcome-section h1 {
+  margin: 0 0 7px;
+
+  color: #102d5c;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: 33px;
+
+  line-height: 1.15;
+
+  font-weight: 700;
+
+  letter-spacing: -0.5px;
+}
+
+.welcome-description {
+  margin: 0;
+
+  color: #637da7;
+
+  font-size: 14px;
+}
+
+
+/* =================================
+   DECORATIVE STARS
+================================= */
+
+.welcome-section::before {
+  content: "✦";
+
+  position: absolute;
+
+  right: 185px;
+  top: 38px;
+
+  color: #a5b5ff;
+
+  font-size: 20px;
+
+  opacity: 0.8;
+}
+
+.welcome-section::after {
+  content: "✦";
+
+  position: absolute;
+
+  right: 120px;
+  top: 82px;
+
+  color: #aebcff;
+
+  font-size: 14px;
+
+  opacity: 0.7;
+}
+
+
+
+
+/* =================================
+   3D STUDENT AVATAR
+================================= */
+
+.welcome-illustration {
+  width: 350px;
+  height: 165px;
+
+  position: relative;
+
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  z-index: 4;
+}
+
+.student-avatar-3d {
+  width: 280px;
+  height: 158px;
+
+  position: relative;
+
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+
+  overflow: hidden;
+}
+
+.student-avatar-3d img {
+  width: 285px;
+  height: 160px;
+
+  position: absolute;
+
+  right: -2px;
+  bottom: -2px;
+
+  display: block;
+
+  object-fit: contain;
+
+  filter:
+    drop-shadow(
+      0 10px 16px rgba(53, 70, 130, 0.13)
+    );
+}
+
+.student-avatar-3d img:hover {
+  transform: translateY(-5px);
+
+  filter:
+    drop-shadow(
+      0 18px 22px rgba(53, 70, 130, 0.17)
+    );
+}
+
+
+/* =================================
+   STATISTICS
+================================= */
+
+.stats-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
+  gap: 18px;
+
+  margin-bottom: 22px;
+}
+
+.stat-card {
+  min-height: 96px;
+
+  padding: 19px 21px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 15px;
+
+  background: #ffffff;
+
+  border: 1px solid #e7ebf4;
+
+  border-radius: 17px;
+
+  box-shadow:
+    0 3px 15px rgba(44, 73, 125, 0.035);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 8px 22px rgba(44, 73, 125, 0.08);
+}
+
+
+/* =================================
+   STAT ICONS
+================================= */
+
+.stat-icon {
+  width: 50px;
+
+  height: 50px;
+
+  flex-shrink: 0;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border-radius: 14px;
+}
+
+.blue-icon {
+  color: #3778e9;
+
+  background: #eaf3ff;
+}
+
+.purple-icon {
+  color: #7567e8;
+
+  background: #f0edff;
+}
+
+.green-icon {
+  color: #4cae7b;
+
+  background: #ebf8f0;
+}
+
+.orange-icon {
+  color: #eaa13c;
+
+  background: #fff5e7;
+}
+
+
+/* =================================
+   STAT TEXT
+================================= */
+
+.stat-card p {
+  margin: 0 0 4px;
+
+  color: #617492;
+
+  font-size: 14px;
+}
+
+.stat-card h2 {
+  margin: 0;
+
+  color: #102d5c;
+
+  font-size: 25px;
+
+  line-height: 1;
+
+  font-weight: 700;
+}
+
+
+/* =================================
+   TWO COLUMN AREA
+================================= */
+
+.dashboard-grid {
+  display: grid;
+
+  grid-template-columns:
+    1.15fr 0.85fr;
+
+  gap: 20px;
+
+  margin-bottom: 22px;
+}
+
+
+/* =================================
+   GENERAL CARD
+================================= */
+
+.dashboard-card {
+  box-sizing: border-box;
+
+  background: #ffffff;
+
+  border: 1px solid #e7ebf4;
+
+  border-radius: 18px;
+
+  padding: 23px;
+
+  box-shadow:
+    0 3px 15px rgba(44, 73, 125, 0.035);
+}
+
+.dashboard-grid .dashboard-card {
+  margin-bottom: 0;
+}
+
+
+/* =================================
+   CARD HEADER
+================================= */
+
+.card-header {
+  display: flex;
+
+  align-items: flex-start;
+
+  justify-content: space-between;
+
+  margin-bottom: 20px;
+}
+
+.card-title-area {
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 13px;
+}
+
+.section-icon {
+  width: 40px;
+
+  height: 40px;
+
+  flex-shrink: 0;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border-radius: 12px;
+}
+
+.purple-section-icon {
+  color: #7062e6;
+
+  background: #f0edff;
+}
+
+.blue-section-icon {
+  color: #4382ec;
+
+  background: #edf5ff;
+}
+
+.card-header h2 {
+  margin: 1px 0 4px;
+
+  color: #102d5c;
+
+  font-size: 18px;
+
+  font-weight: 700;
+}
+
+.card-header p {
+  margin: 0;
+
+  color: #7183a0;
+
+  font-size: 13px;
+}
+
+
+/* =================================
+   PERCENTAGE
+================================= */
+
+.percentage {
+  color: #496ce7;
+
+  font-size: 25px;
+
+  font-weight: 700;
+}
+
+
+/* =================================
+   PROGRESS CARD
+================================= */
+
+.progress-card {
+  min-height: 245px;
+}
+
+.progress-bar {
+  width: 100%;
+
+  height: 12px;
+
+  margin-top: 30px;
+
+  background: #e1e7f5;
+
+  border-radius: 999px;
+
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+
+  background:
+    linear-gradient(
+      90deg,
+      #6f88ef,
+      #6177e9
+    );
+
+  border-radius: 999px;
+
+  transition: width 0.5s ease;
+}
+
+.progress-info {
+  display: flex;
+
+  justify-content: space-between;
+
+  margin-top: 8px;
+
+  color: #91a0b9;
+
+  font-size: 12px;
+}
+
+
+/* =================================
+   SKILL STATUS
+================================= */
+
+.skill-list {
+  display: flex;
+
+  flex-direction: column;
+}
+
+.skill-row {
+  min-height: 43px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  border-bottom: 1px solid #edf0f6;
+}
+
+.skill-row:last-child {
+  border-bottom: none;
+}
+
+.status-label {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  color: #344b70;
+
+  font-size: 14px;
+}
+
+.status-dot {
+  width: 12px;
+
+  height: 12px;
+
+  display: inline-block;
+
+  border-radius: 50%;
+}
+
+.completed-dot {
+  background: #36b879;
+}
+
+.learning-dot {
+  background: #5188ef;
+}
+
+.not-started-dot {
+  background: #f3a43d;
+}
+
+.skill-row strong {
+  color: #496ce7;
+
+  font-size: 15px;
+}
+
+
+/* =================================
+   STATUS HEADER
+================================= */
+
+.status-header-icon,
+.recent-header-icon {
+  width: 40px;
+
+  height: 40px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border-radius: 12px;
+
+  background: #f2f0ff;
+
+  font-size: 21px;
+}
+
+.total-row {
+  margin-top: 2px;
+}
+
+
+/* =================================
+   RECENT SKILLS
+================================= */
+
+.recent-card {
+  margin-bottom: 0;
+}
+
+.activity-item {
+  min-height: 59px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 14px;
+
+  padding: 9px 0;
+
+  border-bottom: 1px solid #edf0f6;
+
+  transition:
+    background 0.2s ease;
+}
+
+.activity-item:last-child {
+  border-bottom: none;
+}
+
+.activity-item:hover {
+  background: #fafbff;
+}
+
+.activity-icon {
+  width: 40px;
+
+  height: 40px;
+
+  flex-shrink: 0;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border-radius: 11px;
+
+  color: #4382ec;
+
+  background: #edf5ff;
+}
+
+.activity-content {
+  flex: 1;
+}
+
+.activity-item strong {
+  display: block;
+
+  color: #172f59;
+
+  font-size: 15px;
+
+  font-weight: 700;
+}
+
+.activity-item p {
+  margin: 3px 0 0;
+
+  color: #8191ab;
+
+  font-size: 13px;
+}
+
+.activity-arrow {
+  color: #9aa9c2;
+
+  flex-shrink: 0;
+}
+
+
+/* =================================
+   EMPTY STATE
+================================= */
+
+.empty-state {
+  padding: 30px 10px;
+
+  text-align: center;
+}
+
+.empty-state p {
+  margin: 5px 0;
+
+  color: #8795ac;
+}
+
+
+/* =================================
+   RESPONSIVE - 1100px
+================================= */
+
+@media (max-width: 1100px) {
+
+  .stats-grid {
+    grid-template-columns:
+      repeat(2, 1fr);
+  }
+
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+
+/* =================================
+   RESPONSIVE - 800px
+================================= */
+
+@media (max-width: 800px) {
+
+  .dashboard-page {
+    padding: 0;
+  }
+
+  .welcome-section {
+    padding: 24px;
+  }
+
+  .welcome-section h1 {
+    font-size: 27px;
+  }
+
+  .welcome-illustration {
+    width: 220px;
+
+    height: 150px;
+  }
+
+  .student-avatar-3d {
+    width: 210px;
+
+    height: 145px;
+  }
+
+  .student-avatar-3d img {
+    width: 220px;
+
+    right: 0;
+
+    bottom: -7px;
+  }
+
+  .graduation-cap {
+    right: 0;
+
+    font-size: 35px;
+  }
+
+}
+
+
+/* =================================
+   RESPONSIVE - 600px
+================================= */
+
+@media (max-width: 600px) {
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .welcome-section {
+    min-height: 145px;
+
+    padding: 20px;
+  }
+
+  .welcome-section h1 {
+    font-size: 24px;
+  }
+
+  .welcome-description {
+    font-size: 13px;
+  }
+
+  .welcome-illustration {
+    display: none;
+  }
+
+  .dashboard-card {
+    padding: 19px;
+  }
+
+}
+
+
+/* =================================
+   RESPONSIVE - 450px
+================================= */
+
+@media (max-width: 450px) {
+
+  .welcome-section {
+    border-radius: 15px;
+  }
+
+  .welcome-content {
+    padding-left: 0;
+  }
+
+  .welcome-label {
+    font-size: 11px;
+  }
+
+  .welcome-section h1 {
+    font-size: 22px;
+  }
+
+  .welcome-description {
+    font-size: 12px;
+  }
+
+  .stat-card {
+    padding: 17px;
+  }
+
+  .stat-icon {
+    width: 45px;
+
+    height: 45px;
+  }
+
+}

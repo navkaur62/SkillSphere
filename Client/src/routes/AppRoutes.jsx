@@ -11,13 +11,17 @@ import Dashboard from "../pages/Dashboard";
 import ProtectedRoute from "./ProtectedRoute";
 import Skills from "../pages/Skills";
 import LearningPaths from "../pages/LearningPaths";
+import Goals from "../pages/Goals";
+import Layout from "../components/Layout";
 
 function AppRoutes() {
   return (
     <BrowserRouter>
       <Routes>
 
-        {/* Public Routes */}
+        {/* =========================
+            PUBLIC ROUTES
+        ========================= */}
 
         <Route
           path="/"
@@ -34,24 +38,41 @@ function AppRoutes() {
           element={<Register />}
         />
 
-        {/* Protected Routes */}
+
+        {/* =========================
+            PROTECTED ROUTES
+        ========================= */}
 
         <Route element={<ProtectedRoute />}>
 
-          <Route
-            path="/dashboard"
-            element={<Dashboard />}
-          />
+          {/* Layout wraps all protected pages */}
+          <Route element={<Layout />}>
 
-          <Route
-            path="/skills"
-            element={<Skills />}
-          />
+            {/* Dashboard */}
+            <Route
+              path="/dashboard"
+              element={<Dashboard />}
+            />
 
-          <Route
-            path="/learning-paths"
-            element={<LearningPaths />}
-          />
+            {/* Skills */}
+            <Route
+              path="/skills"
+              element={<Skills />}
+            />
+
+            {/* Learning Paths */}
+            <Route
+              path="/learning-paths"
+              element={<LearningPaths />}
+            />
+
+            {/* Goals */}
+            <Route
+              path="/goals"
+              element={<Goals />}
+            />
+
+          </Route>
 
         </Route>
 
