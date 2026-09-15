@@ -14,5 +14,4 @@ function ProtectedRoute() {
 
   return <Outlet />;
 }
-
 export default ProtectedRoute;

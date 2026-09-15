@@ -52,6 +52,7 @@ function Sidebar() {
       path: "/settings",
       icon: Settings,
     },
+  
   ];
 
   const currentPath = window.location.pathname;

@@ -13,6 +13,7 @@ import Skills from "../pages/Skills";
 import LearningPaths from "../pages/LearningPaths";
 import Goals from "../pages/Goals";
 import Layout from "../components/Layout";
+import Certifications from "../pages/Certifications";
 
 function AppRoutes() {
   return (
@@ -70,6 +71,12 @@ function AppRoutes() {
             <Route
               path="/goals"
               element={<Goals />}
+            />
+
+            {/* Certifications */}
+            <Route
+              path="/certifications"
+              element={<Certifications />}
             />
 
           </Route>

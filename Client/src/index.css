@@ -2523,3 +2523,518 @@ td {
     align-items: flex-start;
   }
 }
+/* =========================================================
+   GOALS - ADD GOAL BUTTON
+========================================================= */
+
+.goals-add-header-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 16px;
+  background: #172d4d;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.goals-add-header-button:hover {
+  background: #24456f;
+  transform: translateY(-1px);
+}
+
+/* =========================================================
+   ADD GOAL MODAL
+========================================================= */
+
+.goal-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+
+  background: rgba(15, 29, 48, 0.48);
+  backdrop-filter: blur(4px);
+}
+
+/* Modal */
+
+.goal-modal {
+  width: 100%;
+  max-width: 560px;
+  max-height: 90vh;
+  overflow-y: auto;
+
+  background: #ffffff;
+  border: 1px solid #e1e8f1;
+  border-radius: 20px;
+
+  box-shadow: 0 25px 70px rgba(20, 40, 70, 0.2);
+
+  animation: goalModalIn 0.2s ease-out;
+}
+
+@keyframes goalModalIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* =========================================================
+   MODAL HEADER
+========================================================= */
+
+.goal-modal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+
+  padding: 25px 26px 21px;
+
+  border-bottom: 1px solid #edf1f6;
+}
+
+.goal-modal-header span {
+  display: block;
+  margin-bottom: 6px;
+
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.1px;
+
+  color: #718198;
+}
+
+.goal-modal-header h2 {
+  margin: 0;
+
+  font-size: 22px;
+  font-weight: 700;
+
+  color: #172a44;
+}
+
+.goal-modal-header p {
+  margin: 6px 0 0;
+
+  font-size: 13px;
+  line-height: 1.5;
+
+  color: #7b899c;
+}
+
+/* Close */
+
+.goal-modal-close {
+  width: 36px;
+  height: 36px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid #e3e9f1;
+  border-radius: 9px;
+
+  background: #ffffff;
+  color: #6d7c90;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+.goal-modal-close:hover {
+  background: #f4f7fb;
+  color: #263d5d;
+}
+
+/* =========================================================
+   FORM
+========================================================= */
+
+.goal-form {
+  padding: 25px 26px 26px;
+}
+
+.goal-form-group {
+  margin-bottom: 19px;
+}
+
+.goal-form-group label {
+  display: block;
+
+  margin-bottom: 7px;
+
+  font-size: 13px;
+  font-weight: 650;
+
+  color: #263954;
+}
+
+.goal-form-group label span {
+  margin-left: 3px;
+  color: #c65c5c;
+}
+
+.goal-form-group input,
+.goal-form-group textarea {
+  width: 100%;
+  box-sizing: border-box;
+
+  border: 1px solid #dce4ee;
+  border-radius: 10px;
+
+  background: #fbfcfe;
+
+  padding: 11px 13px;
+
+  font-family: inherit;
+  font-size: 13px;
+
+  color: #23344e;
+
+  outline: none;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.goal-form-group input {
+  height: 44px;
+}
+
+.goal-form-group textarea {
+  resize: vertical;
+  min-height: 95px;
+}
+
+.goal-form-group input::placeholder,
+.goal-form-group textarea::placeholder {
+  color: #9aa6b6;
+}
+
+.goal-form-group input:focus,
+.goal-form-group textarea:focus {
+  border-color: #7d9fd3;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(65, 103, 169, 0.09);
+}
+
+.goal-form-group input:disabled,
+.goal-form-group textarea:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+/* =========================================================
+   FORM ERROR
+========================================================= */
+
+.goal-form-error {
+  margin-bottom: 18px;
+
+  padding: 10px 12px;
+
+  border: 1px solid #f0d4d4;
+  border-radius: 9px;
+
+  background: #fff6f6;
+
+  color: #a34d4d;
+
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+/* =========================================================
+   FORM BUTTONS
+========================================================= */
+
+.goal-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+
+  padding-top: 5px;
+}
+
+.goal-cancel-button,
+.goal-create-button {
+  height: 42px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+
+  padding: 0 17px;
+
+  border-radius: 9px;
+
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+.goal-cancel-button {
+  border: 1px solid #dce4ee;
+  background: #ffffff;
+  color: #56677f;
+}
+
+.goal-cancel-button:hover {
+  background: #f5f7fa;
+}
+
+.goal-create-button {
+  border: none;
+  background: #172d4d;
+  color: #ffffff;
+}
+
+.goal-create-button:hover {
+  background: #24456f;
+  transform: translateY(-1px);
+}
+
+.goal-cancel-button:disabled,
+.goal-create-button:disabled,
+.goal-modal-close:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* =========================================================
+   BUTTON LOADER
+========================================================= */
+
+.goal-button-loader {
+  width: 14px;
+  height: 14px;
+
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top-color: #ffffff;
+
+  border-radius: 50%;
+
+  animation: goalButtonSpin 0.7s linear infinite;
+}
+
+@keyframes goalButtonSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* =========================================================
+   RESPONSIVE MODAL
+========================================================= */
+
+@media (max-width: 600px) {
+  .goal-modal-overlay {
+    padding: 12px;
+  }
+
+  .goal-modal {
+    border-radius: 16px;
+  }
+
+  .goal-modal-header {
+    padding: 21px 20px 18px;
+  }
+
+  .goal-modal-header h2 {
+    font-size: 20px;
+  }
+
+  .goal-form {
+    padding: 21px 20px 22px;
+  }
+
+  .goal-form-actions {
+    flex-direction: column-reverse;
+  }
+
+  .goal-cancel-button,
+  .goal-create-button {
+    width: 100%;
+  }
+}
+/* =========================================================
+   GOAL CARD ACTIONS
+========================================================= */
+
+.goal-card-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.goal-edit-button,
+.goal-delete-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+
+  padding: 6px 9px;
+
+  border-radius: 7px;
+
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+.goal-edit-button {
+  border: 1px solid #dce5f0;
+  background: #f7f9fc;
+  color: #4d6688;
+}
+
+.goal-edit-button:hover {
+  background: #edf3fb;
+  border-color: #cbd9e9;
+  color: #294b76;
+}
+
+.goal-delete-button {
+  border: 1px solid #f0dddd;
+  background: #fff8f8;
+  color: #a75b5b;
+}
+
+.goal-delete-button:hover {
+  background: #fff0f0;
+  border-color: #e6caca;
+  color: #943f3f;
+}
+
+/* =========================================================
+   PROGRESS FORM
+========================================================= */
+
+.goal-progress-form-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 9px;
+}
+
+.goal-progress-form-header label {
+  margin-bottom: 0;
+}
+
+.goal-progress-form-header strong {
+  font-size: 13px;
+  color: #315fba;
+}
+
+.goal-progress-slider {
+  width: 100%;
+  height: 6px;
+
+  padding: 0;
+  margin: 5px 0 0;
+
+  accent-color: #315fba;
+
+  cursor: pointer;
+}
+
+.goal-range-labels {
+  display: flex;
+  justify-content: space-between;
+
+  margin-top: 5px;
+
+  font-size: 10px;
+  color: #9aa6b6;
+}
+
+/* =========================================================
+   STATUS SELECT
+========================================================= */
+
+.goal-form-group select {
+  width: 100%;
+  height: 44px;
+
+  box-sizing: border-box;
+
+  padding: 0 13px;
+
+  border: 1px solid #dce4ee;
+  border-radius: 10px;
+
+  background: #fbfcfe;
+
+  font-family: inherit;
+  font-size: 13px;
+
+  color: #23344e;
+
+  outline: none;
+
+  cursor: pointer;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.goal-form-group select:focus {
+  border-color: #7d9fd3;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(65, 103, 169, 0.09);
+}
+
+/* =========================================================
+   RESPONSIVE ACTIONS
+========================================================= */
+
+@media (max-width: 600px) {
+  .goal-card-footer {
+    gap: 14px;
+  }
+
+  .goal-card-actions {
+    width: 100%;
+  }
+
+  .goal-edit-button,
+  .goal-delete-button {
+    flex: 1;
+    justify-content: center;
+  }
+}
