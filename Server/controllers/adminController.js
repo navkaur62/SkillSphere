@@ -1,4 +1,8 @@
 const User = require("../models/user");
+const Skill = require("../models/Skill");
+const LearningPath = require("../models/learningPath");
+const Goal = require("../models/goal");
+const Certification = require("../models/certification");
 
 // GET ALL USERS
 const getAllUsers = async (req, res) => {
@@ -12,6 +16,7 @@ const getAllUsers = async (req, res) => {
             count: users.length,
             users
         });
+
     } catch (error) {
         console.error("Get all users error:", error);
 
@@ -22,28 +27,58 @@ const getAllUsers = async (req, res) => {
         });
     }
 };
+
+
 // GET ADMIN STATISTICS
 const getAdminStats = async (req, res) => {
     try {
-        const totalUsers = await User.countDocuments();
 
-        const totalStudents = await User.countDocuments({
-            role: "student"
-        });
+        const [
+            totalUsers,
+            totalStudents,
+            totalAdmins,
+            totalSkills,
+            totalLearningPaths,
+            totalGoals,
+            totalCertifications
+        ] = await Promise.all([
 
-        const totalAdmins = await User.countDocuments({
-            role: "admin"
-        });
+            User.countDocuments(),
+
+            User.countDocuments({
+                role: "student"
+            }),
+
+            User.countDocuments({
+                role: "admin"
+            }),
+
+            Skill.countDocuments(),
+
+            LearningPath.countDocuments(),
+
+            Goal.countDocuments(),
+
+            Certification.countDocuments()
+        ]);
+
 
         res.status(200).json({
             success: true,
+
             statistics: {
                 totalUsers,
                 totalStudents,
-                totalAdmins
+                totalAdmins,
+                totalSkills,
+                totalLearningPaths,
+                totalGoals,
+                totalCertifications
             }
         });
+
     } catch (error) {
+
         console.error("Get admin statistics error:", error);
 
         res.status(500).json({
@@ -53,6 +88,8 @@ const getAdminStats = async (req, res) => {
         });
     }
 };
+
+
 module.exports = {
     getAllUsers,
     getAdminStats

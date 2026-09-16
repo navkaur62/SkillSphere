@@ -5,9 +5,9 @@ import {
   Target,
   Award,
   User,
-  Settings,
   ChevronRight,
   ArrowRight,
+  Settings,
 } from "lucide-react";
 
 import { useAuth } from "../context/authContext";

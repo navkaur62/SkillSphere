@@ -14,6 +14,10 @@ import LearningPaths from "../pages/LearningPaths";
 import Goals from "../pages/Goals";
 import Layout from "../components/Layout";
 import Certifications from "../pages/Certifications";
+import Profile from "../pages/Profile";
+import AdminDashboard from "../pages/AdminDashboard";
+import Settings from "../pages/Settings";
+
 
 function AppRoutes() {
   return (
@@ -78,7 +82,19 @@ function AppRoutes() {
               path="/certifications"
               element={<Certifications />}
             />
-
+            {/* Profile */}
+            <Route
+              path="/profile"
+              element={<Profile />}
+            />
+            <Route 
+              path="/admin" 
+              element={<AdminDashboard />}
+            />
+            <Route 
+              path="/settings" 
+              element={<Settings />}
+            />
           </Route>
 
         </Route>

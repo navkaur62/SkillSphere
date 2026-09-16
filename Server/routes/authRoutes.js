@@ -4,6 +4,7 @@ const User = require("../models/user");
 const {
   registerUser,
   loginUser,
+  changePassword,
 } = require("../controllers/authController");
 
 const protect = require("../middleware/authmiddleware");
@@ -20,6 +21,12 @@ router.post("/register", registerUser);
 // LOGIN
 // ===============================
 router.post("/login", loginUser);
+
+
+// ===============================
+// CHANGE PASSWORD
+// ===============================
+router.put("/change-password", protect, changePassword);
 
 
 // ===============================

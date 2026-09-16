@@ -1,26 +1,29 @@
 import api from "./api";
 
-const register = async (userData) => {
-  const response = await api.post("/auth/register", userData);
-
-  return response.data;
-};
-
-const login = async (credentials) => {
-  const response = await api.post("/auth/login", credentials);
-
-  return response.data;
-};
-
-const logout = () => {
-  localStorage.removeItem("token");
-  localStorage.removeItem("user");
-};
-
 const authService = {
-  register,
-  login,
-  logout,
+  register: async (userData) => {
+    const response = await api.post("/auth/register", userData);
+    return response.data;
+  },
+
+  login: async (credentials) => {
+    const response = await api.post("/auth/login", credentials);
+    return response.data;
+  },
+
+  changePassword: async (passwordData) => {
+    const response = await api.put(
+      "/auth/change-password",
+      passwordData
+    );
+
+    return response.data;
+  },
+
+  logout: () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+  },
 };
 
 export default authService;
