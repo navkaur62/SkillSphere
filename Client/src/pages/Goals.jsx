@@ -35,10 +35,6 @@ function Goals() {
   // FETCH GOALS
   // =========================
 
-  useEffect(() => {
-    fetchGoals();
-  }, []);
-
   const fetchGoals = async () => {
     try {
       setLoading(true);
@@ -58,6 +54,34 @@ function Goals() {
       setLoading(false);
     }
   };
+
+  // =========================
+  // LOAD GOALS
+  // =========================
+
+  useEffect(() => {
+  const loadGoals = async () => {
+    try {
+      setLoading(true);
+      setError("");
+
+      const data = await goalService.getGoals();
+
+      setGoals(data.goals || []);
+    } catch (err) {
+      console.error("Error fetching goals:", err);
+
+      setError(
+        err.response?.data?.message ||
+          "Unable to load your goals."
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  loadGoals();
+}, []);
 
   // =========================
   // OPEN CREATE MODAL

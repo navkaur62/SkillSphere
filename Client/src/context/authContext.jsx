@@ -1,50 +1,38 @@
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
-
+import { useState } from "react";
 import authService from "../services/authService";
+import { AuthContext } from "./AuthContext";
 
-const AuthContext = createContext(null);
+const getStoredUser = () => {
+  const token = localStorage.getItem("token");
+  const storedUser = localStorage.getItem("user");
+
+  if (!token || !storedUser) {
+    return null;
+  }
+
+  try {
+    return JSON.parse(storedUser);
+  } catch (error) {
+    console.error("Invalid stored user:", error);
+
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+
+    return null;
+  }
+};
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState(getStoredUser);
+  const loading = false;
 
-  // Check login information when app starts
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    const storedUser = localStorage.getItem("user");
-
-    if (token && storedUser) {
-      try {
-        const parsedUser = JSON.parse(storedUser);
-        setUser(parsedUser);
-      } catch (error) {
-        console.error("Invalid stored user:", error);
-
-        localStorage.removeItem("token");
-        localStorage.removeItem("user");
-      }
-    }
-
-    setLoading(false);
-  }, []);
-
-  // LOGIN
   const login = async (credentials) => {
     try {
       const data = await authService.login(credentials);
 
-      // Save token
       localStorage.setItem("token", data.token);
-
-      // Save user
       localStorage.setItem("user", JSON.stringify(data.user));
 
-      // Update React state
       setUser(data.user);
 
       return data;
@@ -54,7 +42,6 @@ export function AuthProvider({ children }) {
     }
   };
 
-  // REGISTER
   const register = async (userData) => {
     try {
       const data = await authService.register(userData);
@@ -66,7 +53,6 @@ export function AuthProvider({ children }) {
     }
   };
 
-  // LOGOUT
   const logout = () => {
     authService.logout();
 
@@ -89,9 +75,4 @@ export function AuthProvider({ children }) {
       {children}
     </AuthContext.Provider>
   );
-}
-
-// CUSTOM HOOK
-export function useAuth() {
-  return useContext(AuthContext);
 }

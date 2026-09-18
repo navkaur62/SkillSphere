@@ -7,19 +7,24 @@ import {
   BarChart3,
   Lightbulb,
   ChevronRight,
-  CheckCircle2,
-  CircleDot,
 } from "lucide-react";
+
 import "./Dashboard.css";
-import { useAuth } from "../context/authContext";
+import { useAuth } from "../context/useAuth";
 import dashboardService from "../services/dashboardService";
 import StudentAvatar from "../components/StudentAvatar";
+
 function Dashboard() {
   const { user } = useAuth();
 
   const [dashboard, setDashboard] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+
+  // Check if this user has just registered
+  const [isNewUser] = useState(() => {
+    return sessionStorage.getItem("newUser") === "true";
+  });
 
   useEffect(() => {
     const fetchDashboard = async () => {
@@ -45,12 +50,21 @@ function Dashboard() {
     fetchDashboard();
   }, []);
 
+  // Remove the new-user flag after the dashboard has shown it
+  useEffect(() => {
+    if (isNewUser) {
+      sessionStorage.removeItem("newUser");
+    }
+  }, [isNewUser]);
+
   if (loading) {
     return (
       <div className="dashboard-page">
         <div className="dashboard-card">
           <h2>Loading dashboard...</h2>
-          <p>Please wait while we load your learning data.</p>
+          <p>
+            Please wait while we load your learning data.
+          </p>
         </div>
       </div>
     );
@@ -90,7 +104,9 @@ function Dashboard() {
         <div className="welcome-content">
 
           <p className="welcome-label">
-            WELCOME BACK 👋
+            {isNewUser
+              ? "WELCOME 👋"
+              : "WELCOME BACK 👋"}
           </p>
 
           <h1>
@@ -103,13 +119,15 @@ function Dashboard() {
 
         </div>
 
-       <div className="welcome-illustration">
-  <StudentAvatar />
+        <div className="welcome-illustration">
 
-  <div className="graduation-cap">
-    🎓
-  </div>
-</div>
+          <StudentAvatar />
+
+          <div className="graduation-cap">
+            🎓
+          </div>
+
+        </div>
 
       </section>
 
@@ -267,8 +285,11 @@ function Dashboard() {
             <div className="skill-row">
 
               <div className="status-label">
+
                 <span className="status-dot completed-dot"></span>
+
                 <span>Completed</span>
+
               </div>
 
               <strong>{completedSkills}</strong>
@@ -279,8 +300,11 @@ function Dashboard() {
             <div className="skill-row">
 
               <div className="status-label">
+
                 <span className="status-dot learning-dot"></span>
+
                 <span>Learning</span>
+
               </div>
 
               <strong>{learningSkills}</strong>
@@ -291,8 +315,11 @@ function Dashboard() {
             <div className="skill-row">
 
               <div className="status-label">
+
                 <span className="status-dot not-started-dot"></span>
+
                 <span>Not Started</span>
+
               </div>
 
               <strong>{notStartedSkills}</strong>

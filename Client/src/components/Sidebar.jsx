@@ -8,9 +8,10 @@ import {
   ChevronRight,
   ArrowRight,
   Settings,
+  ShieldCheck,
 } from "lucide-react";
 
-import { useAuth } from "../context/authContext";
+import { useAuth } from "../context/useAuth";
 import studentAvatar from "../assets/student-3d.png";
 
 function Sidebar() {
@@ -52,8 +53,16 @@ function Sidebar() {
       path: "/settings",
       icon: Settings,
     },
-  
   ];
+
+  // Add Admin Dashboard only for admin users
+  if (user?.role === "admin") {
+    menuItems.push({
+      name: "Admin Dashboard",
+      path: "/admin",
+      icon: ShieldCheck,
+    });
+  }
 
   const currentPath = window.location.pathname;
 
@@ -73,7 +82,9 @@ function Sidebar() {
             {user?.name || "Navdeep Kaur"}
           </h4>
 
-          <span>Student</span>
+          <span>
+            {user?.role === "admin" ? "Administrator" : "Student"}
+          </span>
         </div>
 
         <ChevronRight

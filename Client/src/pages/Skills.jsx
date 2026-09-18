@@ -23,71 +23,30 @@ function Skills() {
   });
 
 
-  // ===============================
-  // FETCH SKILLS + USER PROFILE
-  // ===============================
-
-  const fetchSkills = async () => {
-    try {
-      setLoading(true);
-      setError("");
-
-      // Get all available skills
-      const skillsResponse = await api.get("/skills");
-
-      const availableSkills = skillsResponse.data?.skills;
-
-      setSkills(
-        Array.isArray(availableSkills)
-          ? availableSkills
-          : []
-      );
-
-
-      // Get latest logged-in user's profile
-      const profileResponse = await api.get("/auth/profile");
-
-      const currentUser = profileResponse.data?.user;
-
-      const userSkills = currentUser?.skills;
-
-      setMySkills(
-        Array.isArray(userSkills)
-          ? userSkills
-          : []
-      );
-
-
-      // Update localStorage with latest user
-      if (currentUser) {
-        localStorage.setItem(
-          "user",
-          JSON.stringify(currentUser)
-        );
-      }
-
-    } catch (err) {
-      console.error("Skills error:", err);
-
-      setError(
-        err.response?.data?.message ||
-        "Failed to load skills."
-      );
-
-    } finally {
-      setLoading(false);
-    }
-  };
-
+  
 
   // ===============================
   // LOAD DATA WHEN PAGE OPENS
   // ===============================
 
   useEffect(() => {
-    fetchSkills();
-  }, []);
+  const loadSkills = async () => {
+    try {
+      const response = await api.get("/skills");
+      setSkills(response.data?.skills || []);
+    } catch (error) {
+      console.error("Error fetching skills:", error);
+      setError(
+        error.response?.data?.message ||
+        "Failed to load skills."
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  loadSkills();
+}, []);
 
   // ===============================
   // CHECK WHETHER SKILL IS ADDED

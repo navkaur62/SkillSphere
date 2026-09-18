@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useAuth } from "../context/authContext";
+import { useAuth } from "../context/useAuth";
 import { Bell, Lock, User, LogOut, Eye, EyeOff } from "lucide-react";
 import userService from "../services/userService";
 import authService from "../services/authService";

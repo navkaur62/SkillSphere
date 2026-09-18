@@ -21,15 +21,12 @@ const Certifications = () => {
 
   const [editingId, setEditingId] = useState(null);
 
+  // =========================
+  // FETCH ON PAGE LOAD
+  // =========================
+
   useEffect(() => {
-    fetchCertifications();
-  }, []);
-
-  // =========================
-  // GET CERTIFICATIONS
-  // =========================
-
-  const fetchCertifications = async () => {
+  const loadCertifications = async () => {
     try {
       const token = localStorage.getItem("token");
 
@@ -57,6 +54,9 @@ const Certifications = () => {
       setLoading(false);
     }
   };
+
+  loadCertifications();
+}, []);
 
   // =========================
   // HANDLE INPUT
@@ -201,7 +201,6 @@ const Certifications = () => {
       setFormData(emptyForm);
       setEditingId(null);
       setShowForm(false);
-
     } catch (err) {
       setError(err.message);
     } finally {
@@ -251,7 +250,6 @@ const Certifications = () => {
             certification._id !== id
         )
       );
-
     } catch (err) {
       setError(err.message);
     }

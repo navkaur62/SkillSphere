@@ -5,9 +5,14 @@ import {
   Lock,
   Mail,
   Sparkles,
+  GraduationCap,
 } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../context/authContext";
+import { useAuth } from "../context/useAuth";
+import "./Login.css";
+
+// Your SkillSphere avatar
+import avatar from "../assets/student-3d.png";
 
 function Login() {
   const navigate = useNavigate();
@@ -42,7 +47,7 @@ function Login() {
     } catch (error) {
       setError(
         error.response?.data?.message ||
-        "Invalid email or password."
+          "Invalid email or password."
       );
     } finally {
       setLoading(false);
@@ -50,130 +55,279 @@ function Login() {
   };
 
   return (
-    <div className="auth-page">
-      <div className="auth-card">
+    <div className="login-page">
 
-        <div className="auth-brand">
-          <div className="brand-icon">
-            <Sparkles size={24} />
-          </div>
+      {/* =========================
+          BACKGROUND DECORATIONS
+      ========================= */}
 
-          <div>
-            <h1>SkillSphere</h1>
-            <p>Learn. Grow. Achieve.</p>
-          </div>
-        </div>
+      <div className="login-orb login-orb-one"></div>
+      <div className="login-orb login-orb-two"></div>
+      <div className="login-orb login-orb-three"></div>
 
-        <div className="auth-header">
-          <h2>Welcome back!</h2>
-          <p>
-            Sign in to continue your learning journey.
-          </p>
-        </div>
+      <div className="login-grid login-grid-left"></div>
+      <div className="login-grid login-grid-right"></div>
 
-        {error && (
-          <div className="auth-error">
-            {error}
-          </div>
-        )}
+      <div className="login-floating-shape shape-one"></div>
+      <div className="login-floating-shape shape-two"></div>
+      <div className="login-floating-shape shape-three"></div>
 
-        <form
-          className="auth-form"
-          onSubmit={handleSubmit}
-        >
 
-          <div className="form-group">
-            <label htmlFor="email">
-              Email Address
-            </label>
+      {/* =========================
+          MAIN CONTENT
+      ========================= */}
 
-            <div className="input-wrapper">
-              <Mail size={19} />
+      <div className="login-container">
 
-              <input
-                id="email"
-                name="email"
-                type="email"
-                placeholder="Enter your email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-              />
+        {/* =========================
+            LOGIN SECTION
+        ========================= */}
+
+        <div className="login-form-section">
+
+          {/* Brand */}
+
+          <div className="login-brand">
+            <div className="login-brand-icon">
+              <Sparkles size={21} />
+            </div>
+
+            <div>
+              <h1>SkillSphere</h1>
+              <p>Learn. Grow. Achieve.</p>
             </div>
           </div>
 
-          <div className="form-group">
-            <label htmlFor="password">
-              Password
-            </label>
 
-            <div className="input-wrapper">
-              <Lock size={19} />
+          {/* Header */}
 
-              <input
-                id="password"
-                name="password"
-                type={
-                  showPassword
-                    ? "text"
-                    : "password"
-                }
-                placeholder="Enter your password"
-                value={formData.password}
-                onChange={handleChange}
-                required
-              />
+          <div className="login-header">
+            <h2>Welcome back!</h2>
+
+            <p>
+              Sign in to continue your learning journey.
+            </p>
+          </div>
+
+
+          {/* Error */}
+
+          {error && (
+            <div className="login-error">
+              {error}
+            </div>
+          )}
+
+
+          {/* Form */}
+
+          <form
+            className="login-form"
+            onSubmit={handleSubmit}
+          >
+
+            {/* Email */}
+
+            <div className="login-form-group">
+
+              <label htmlFor="email">
+                Email Address
+              </label>
+
+              <div className="login-input-wrapper">
+
+                <Mail
+                  size={18}
+                  className="login-input-icon"
+                />
+
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  placeholder="Enter your email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  autoComplete="email"
+                  required
+                />
+
+              </div>
+
+            </div>
+
+
+            {/* Password */}
+
+            <div className="login-form-group">
+
+              <label htmlFor="password">
+                Password
+              </label>
+
+              <div className="login-input-wrapper">
+
+                <Lock
+                  size={18}
+                  className="login-input-icon"
+                />
+
+                <input
+                  id="password"
+                  name="password"
+                  type={
+                    showPassword
+                      ? "text"
+                      : "password"
+                  }
+                  placeholder="Enter your password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  autoComplete="current-password"
+                  required
+                />
+
+                <button
+                  type="button"
+                  className="login-password-toggle"
+                  onClick={() =>
+                    setShowPassword(!showPassword)
+                  }
+                  aria-label={
+                    showPassword
+                      ? "Hide password"
+                      : "Show password"
+                  }
+                >
+                  {showPassword ? (
+                    <EyeOff size={18} />
+                  ) : (
+                    <Eye size={18} />
+                  )}
+                </button>
+
+              </div>
+
+            </div>
+
+
+            {/* Options */}
+
+            <div className="login-form-options">
+
+              <label className="login-remember">
+
+                <input type="checkbox" />
+
+                <span>
+                  Remember me
+                </span>
+
+              </label>
 
               <button
                 type="button"
-                className="password-toggle"
-                onClick={() =>
-                  setShowPassword(!showPassword)
-                }
+                className="login-forgot"
+                onClick={() => {}}
               >
-                {showPassword ? (
-                  <EyeOff size={19} />
-                ) : (
-                  <Eye size={19} />
-                )}
+                Forgot password?
               </button>
+
             </div>
-          </div>
 
-          <div className="form-options">
-            <label className="remember-me">
-              <input type="checkbox" />
-              <span>Remember me</span>
-            </label>
 
-            <a
-              href="#"
-              className="forgot-password"
+            {/* Submit */}
+
+            <button
+              type="submit"
+              className="login-submit"
+              disabled={loading}
             >
-              Forgot password?
-            </a>
+              {loading
+                ? "Signing in..."
+                : "Sign In"}
+            </button>
+
+          </form>
+
+
+          {/* Footer */}
+
+          <div className="login-footer">
+
+            <p>
+              Don't have an account?{" "}
+
+              <Link to="/register">
+                Create an account
+              </Link>
+            </p>
+
           </div>
 
-          <button
-            type="submit"
-            className="login-button"
-            disabled={loading}
-          >
-            {loading ? "Signing in..." : "Sign In"}
-          </button>
+        </div>
 
-        </form>
 
-        <div className="auth-footer">
-          <p>
-            Don't have an account?{" "}
-            <Link to="/register">
-              Create an account
-            </Link>
-          </p>
+        {/* =========================
+            RIGHT VISUAL SECTION
+        ========================= */}
+
+        <div className="login-visual-section">
+
+          {/* Decorative circle */}
+
+          <div className="visual-glow"></div>
+
+
+          {/* Main learning illustration */}
+
+          <div className="learning-illustration">
+
+            <div className="illustration-sparkle sparkle-one">
+              ✦
+            </div>
+
+            <div className="illustration-sparkle sparkle-two">
+              ✦
+            </div>
+
+
+            {/* YOUR AVATAR */}
+
+            <img
+              src={avatar}
+              alt="SkillSphere learner"
+              className="login-avatar"
+            />
+
+          </div>
+
+
+          {/* Text */}
+
+          <div className="visual-content">
+
+            <div className="visual-icon">
+              <GraduationCap size={22} />
+            </div>
+
+            <h3>
+              Build skills.
+              <br />
+              Achieve your goals.
+            </h3>
+
+            <p>
+              Track your progress, explore learning
+              paths and grow your skills with SkillSphere.
+            </p>
+
+          </div>
+
         </div>
 
       </div>
+
     </div>
   );
 }

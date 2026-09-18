@@ -67,7 +67,32 @@ function LearningPaths() {
   // ===============================
 
   useEffect(() => {
-    fetchLearningPaths();
+    const loadLearningPaths = async () => {
+      try {
+        setLoading(true);
+        setError("");
+
+        const data =
+          await learningPathService.getAllLearningPaths();
+
+        setLearningPaths(
+          Array.isArray(data.learningPaths)
+            ? data.learningPaths
+            : []
+        );
+      } catch (err) {
+        console.error("Learning paths error:", err);
+
+        setError(
+          err.response?.data?.message ||
+            "Failed to load learning paths."
+        );
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadLearningPaths();
   }, []);
 
   // ===============================

@@ -17,7 +17,7 @@ import Certifications from "../pages/Certifications";
 import Profile from "../pages/Profile";
 import AdminDashboard from "../pages/AdminDashboard";
 import Settings from "../pages/Settings";
-
+import AdminRoute from "./AdminRoute";
 
 function AppRoutes() {
   return (
@@ -88,9 +88,11 @@ function AppRoutes() {
               element={<Profile />}
             />
             <Route 
-              path="/admin" 
-              element={<AdminDashboard />}
-            />
+              element={<AdminRoute />}>
+              <Route path="/admin"
+               element={<AdminDashboard />}
+              />
+            </Route>
             <Route 
               path="/settings" 
               element={<Settings />}

@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from "react";
 import {
   User,
   Mail,
@@ -10,12 +9,13 @@ import {
   GraduationCap,
 } from "lucide-react";
 
-import { useAuth } from "../context/authContext";
+import { useEffect, useState } from "react";
+import { useAuth } from "../context/useAuth";
 import profileService from "../services/profileService";
 import "./Profile.css";
 
 function Profile() {
-  const { user, login } = useAuth();
+  const { user } = useAuth();
 
   const [profile, setProfile] = useState(user);
   const [loading, setLoading] = useState(true);
