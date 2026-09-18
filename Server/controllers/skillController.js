@@ -63,7 +63,33 @@ const getAllSkills = async (req, res) => {
         });
     }
 };
+// GET CURRENT USER SKILLS
+const getMySkills = async (req, res) => {
+    try {
+        const user = await User.findById(req.user.userId)
+            .select("-password")
+            .populate("skills.skill");
 
+        if (!user) {
+            return res.status(404).json({
+                message: "User not found"
+            });
+        }
+
+        res.status(200).json({
+            message: "User skills fetched successfully",
+            skills: user.skills
+        });
+
+    } catch (error) {
+        console.error("Get my skills error:", error);
+
+        res.status(500).json({
+            message: "Server error",
+            error: error.message
+        });
+    }
+};
 
 // ADD SKILL TO USER PROFILE
 const addSkillToProfile = async (req, res) => {
@@ -259,6 +285,7 @@ const removeSkillFromProfile = async (req, res) => {
 module.exports = {
     createSkill,
     getAllSkills,
+    getMySkills,
     addSkillToProfile,
     updateSkillProgress,
     removeSkillFromProfile

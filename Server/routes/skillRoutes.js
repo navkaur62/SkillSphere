@@ -3,6 +3,7 @@ const express = require("express");
 const {
     createSkill,
     getAllSkills,
+    getMySkills,
     addSkillToProfile,
     updateSkillProgress,
     removeSkillFromProfile
@@ -15,6 +16,8 @@ const router = express.Router();
 router.post("/", protect, createSkill);
 
 router.get("/", protect, getAllSkills);
+
+router.get("/my-skills", protect, getMySkills);
 
 router.post("/add", protect, addSkillToProfile);
 

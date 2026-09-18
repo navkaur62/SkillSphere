@@ -29,13 +29,19 @@ function Skills() {
   // LOAD DATA WHEN PAGE OPENS
   // ===============================
 
-  useEffect(() => {
+useEffect(() => {
   const loadSkills = async () => {
     try {
-      const response = await api.get("/skills");
-      setSkills(response.data?.skills || []);
+      const [skillsResponse, mySkillsResponse] = await Promise.all([
+        api.get("/skills"),
+        api.get("/skills/my-skills"),
+      ]);
+
+      setSkills(skillsResponse.data?.skills || []);
+      setMySkills(mySkillsResponse.data?.skills || []);
     } catch (error) {
       console.error("Error fetching skills:", error);
+
       setError(
         error.response?.data?.message ||
         "Failed to load skills."
@@ -47,7 +53,6 @@ function Skills() {
 
   loadSkills();
 }, []);
-
   // ===============================
   // CHECK WHETHER SKILL IS ADDED
   // ===============================
