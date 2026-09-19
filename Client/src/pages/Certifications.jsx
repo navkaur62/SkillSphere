@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import "./Certifications.css";
+import api from "../services/api";
 
 const emptyForm = {
   title: "",
@@ -26,37 +27,26 @@ const Certifications = () => {
   // =========================
 
   useEffect(() => {
-  const loadCertifications = async () => {
-    try {
-      const token = localStorage.getItem("token");
+    const loadCertifications = async () => {
+      try {
+        const response = await api.get("/certifications");
 
-      const response = await fetch(
-        "http://localhost:5000/api/certifications",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+        const data = response.data;
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(
-          data.message || "Failed to fetch certifications"
+        setCertifications(data.certifications || data);
+      } catch (err) {
+        setError(
+          err.response?.data?.message ||
+            err.message ||
+            "Failed to fetch certifications"
         );
+      } finally {
+        setLoading(false);
       }
+    };
 
-      setCertifications(data.certifications || data);
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  loadCertifications();
-}, []);
+    loadCertifications();
+  }, []);
 
   // =========================
   // HANDLE INPUT
@@ -122,8 +112,6 @@ const Certifications = () => {
     setError("");
 
     try {
-      const token = localStorage.getItem("token");
-
       const certificationData = {
         title: formData.title,
         issuer: formData.issuer,
@@ -135,25 +123,12 @@ const Certifications = () => {
 
       // UPDATE
       if (editingId) {
-        const response = await fetch(
-          `http://localhost:5000/api/certifications/${editingId}`,
-          {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify(certificationData),
-          }
+        const response = await api.put(
+          `/certifications/${editingId}`,
+          certificationData
         );
 
-        const data = await response.json();
-
-        if (!response.ok) {
-          throw new Error(
-            data.message || "Failed to update certification"
-          );
-        }
+        const data = response.data;
 
         const updatedCertification =
           data.certification || data;
@@ -169,25 +144,12 @@ const Certifications = () => {
 
       // CREATE
       else {
-        const response = await fetch(
-          "http://localhost:5000/api/certifications",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify(certificationData),
-          }
+        const response = await api.post(
+          "/certifications",
+          certificationData
         );
 
-        const data = await response.json();
-
-        if (!response.ok) {
-          throw new Error(
-            data.message || "Failed to add certification"
-          );
-        }
+        const data = response.data;
 
         const newCertification =
           data.certification || data;
@@ -202,7 +164,11 @@ const Certifications = () => {
       setEditingId(null);
       setShowForm(false);
     } catch (err) {
-      setError(err.message);
+      setError(
+        err.response?.data?.message ||
+          err.message ||
+          "Failed to save certification"
+      );
     } finally {
       setFormLoading(false);
     }
@@ -224,25 +190,7 @@ const Certifications = () => {
     try {
       setError("");
 
-      const token = localStorage.getItem("token");
-
-      const response = await fetch(
-        `http://localhost:5000/api/certifications/${id}`,
-        {
-          method: "DELETE",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(
-          data.message || "Failed to delete certification"
-        );
-      }
+      await api.delete(`/certifications/${id}`);
 
       setCertifications((prev) =>
         prev.filter(
@@ -251,7 +199,11 @@ const Certifications = () => {
         )
       );
     } catch (err) {
-      setError(err.message);
+      setError(
+        err.response?.data?.message ||
+          err.message ||
+          "Failed to delete certification"
+      );
     }
   };
 
@@ -287,7 +239,6 @@ const Certifications = () => {
   return (
     <div className="certifications-page">
 
-      {/* Header */}
       <div className="certifications-header">
         <div>
           <h1>Certifications</h1>
@@ -305,14 +256,12 @@ const Certifications = () => {
         </button>
       </div>
 
-      {/* Error */}
       {error && (
         <div className="certification-error">
           {error}
         </div>
       )}
 
-      {/* Certification List */}
       {certifications.length === 0 ? (
         <div className="empty-certifications">
 
@@ -395,7 +344,6 @@ const Certifications = () => {
                   </a>
                 )}
 
-                {/* Actions */}
                 <div className="certification-actions">
 
                   <button
@@ -427,7 +375,6 @@ const Certifications = () => {
         </div>
       )}
 
-      {/* Add / Edit Modal */}
       {showForm && (
 
         <div
@@ -442,7 +389,6 @@ const Certifications = () => {
             }
           >
 
-            {/* Modal Header */}
             <div className="modal-header">
 
               <div>
@@ -468,13 +414,11 @@ const Certifications = () => {
 
             </div>
 
-            {/* Form */}
             <form
               className="certification-form"
               onSubmit={handleSubmit}
             >
 
-              {/* Title */}
               <div className="form-group">
 
                 <label>
@@ -492,7 +436,6 @@ const Certifications = () => {
 
               </div>
 
-              {/* Issuer */}
               <div className="form-group">
 
                 <label>
@@ -510,7 +453,6 @@ const Certifications = () => {
 
               </div>
 
-              {/* Dates */}
               <div className="form-row">
 
                 <div className="form-group">
@@ -546,7 +488,6 @@ const Certifications = () => {
 
               </div>
 
-              {/* Credential ID */}
               <div className="form-group">
 
                 <label>
@@ -563,7 +504,6 @@ const Certifications = () => {
 
               </div>
 
-              {/* Credential URL */}
               <div className="form-group">
 
                 <label>
@@ -580,7 +520,6 @@ const Certifications = () => {
 
               </div>
 
-              {/* Actions */}
               <div className="form-actions">
 
                 <button
